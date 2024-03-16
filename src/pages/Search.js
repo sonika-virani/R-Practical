@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 function Search() {
 
@@ -40,10 +40,36 @@ function Search() {
             rating: 'C'
         }
     ]
+    const [searchText, setSearchText] = useState('');
+
+    const filterData = (data, searchText) => {
+        return data.filter(item => {
+            if (!searchText) return true;
+
+            const searchString = searchText.toLowerCase();
+            return Object.values(item).some(val => {
+                return val.toString().toLowerCase().includes(searchString);
+            });
+        });
+    };
+
+    const handleChange = value => {
+        setSearchText(value);
+    };
+    const filteredData = filterData(dataList, searchText);
 
 
     return (
         <div>
+            <div className="col-md-2">
+                <label htmlFor="name" className="form-label"></label>
+                <input
+                    type="text"
+                    className="form-control"
+                    value={searchText}
+                    onChange={e => handleChange(e.target.value)}
+                />
+            </div>
             <div className="col-12">
                 <table className="table">
                     <thead>
@@ -54,7 +80,7 @@ function Search() {
                     </tr>
                     </thead>
                     <tbody>
-                    {dataList.map((item, rowIndex) => (
+                    {filteredData.map((item, rowIndex) => (
                         <tr key={rowIndex}>
                             {Object.keys(dataList.reduce((acc, obj) => ({...acc, ...obj}), {})).map((key, colIndex) => (
                                 <td key={colIndex}>{item[key] || '-'}</td>
