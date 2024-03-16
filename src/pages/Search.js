@@ -57,6 +57,7 @@ function Search() {
         setSearchText(value);
     };
     const filteredData = filterData(dataList, searchText);
+    console.log('filteredData', filteredData);
 
 
     return (
@@ -80,13 +81,13 @@ function Search() {
                     </tr>
                     </thead>
                     <tbody>
-                    {filteredData.map((item, rowIndex) => (
+                    {filteredData.length > 0 ? filteredData.map((item, rowIndex) => (
                         <tr key={rowIndex}>
                             {Object.keys(dataList.reduce((acc, obj) => ({...acc, ...obj}), {})).map((key, colIndex) => (
                                 <td key={colIndex}>{item[key] || '-'}</td>
                             ))}
                         </tr>
-                    ))}
+                    )) : <div>{'No record found'}</div>}
                     </tbody>
                 </table>
             </div>
