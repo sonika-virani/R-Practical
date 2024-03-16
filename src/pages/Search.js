@@ -42,9 +42,26 @@ function Search() {
         }
     ]
     const [searchText, setSearchText] = useState('');
+    const [filters, setFilters] = useState({});
 
-    const filterData = (data, searchText) => {
+    const handleCheckboxChange = (key, value) => {
+        setFilters(prevFilters => ({
+            ...prevFilters,
+            [key]: prevFilters[key] ? prevFilters[key].includes(value)
+                    ? prevFilters[key].filter(item => item !== value)
+                    : [...prevFilters[key], value]
+                : [value]
+        }));
+    };
+
+    const filterData = (data, searchText, filters) => {
         return data.filter(item => {
+            const matchesFilter = Object.entries(filters).every(([key, values]) => {
+                return values.length === 0 || values.includes(item[key]);
+            });
+
+            if (!matchesFilter) return false;
+
             if (!searchText) return true;
 
             const searchString = searchText.toLowerCase();
@@ -57,18 +74,17 @@ function Search() {
     const handleChange = value => {
         setSearchText(value);
     };
-    const filteredData = filterData(dataList, searchText);
-    console.log('filteredData', filteredData);
-
+    const filteredData = filterData(dataList, searchText, filters);
 
     return (
-        <div>
-            <FilterCheckboxes dataList={dataList} />
+        <div className="row">
+            <FilterCheckboxes dataList={dataList} handleCheckboxChange={handleCheckboxChange}/>
             <div className="col-md-2">
                 <label htmlFor="name" className="form-label"></label>
                 <input
                     type="text"
                     className="form-control"
+                    placeholder="Search..."
                     value={searchText}
                     onChange={e => handleChange(e.target.value)}
                 />

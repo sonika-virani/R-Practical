@@ -1,13 +1,26 @@
 # React Assessment Task
 
-## Available Scripts
+## React version
 
-In the project directory, you can run:
+Version: v18.2.0
 
-### `npm start`
+## Node version
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Version: v18.19.0 || v16.20.1
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Yarn installation: Install via npm
+
+-> It is recommended to install Yarn through the npm package manager, which comes bundled
+with Node.js when you install it on your system.
+
+Once you have npm installed you can run the following both to install and upgrade Yarn:
+
+`npm install --global yarn || npm install yarn`
+
+-> To install packages to below:
+
+`yarn install`
+
+-> After all installation done you can run
+
+`yarn start`
