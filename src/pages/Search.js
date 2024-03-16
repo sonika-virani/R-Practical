@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react';
+import FilterCheckboxes from '../Component/FilterCheckboxes';
 
 function Search() {
 
@@ -62,6 +63,7 @@ function Search() {
 
     return (
         <div>
+            <FilterCheckboxes dataList={dataList} />
             <div className="col-md-2">
                 <label htmlFor="name" className="form-label"></label>
                 <input
